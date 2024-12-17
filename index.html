@@ -8,7 +8,7 @@
     content="Taijitu, Large Language Models, LLM, Code LLM, Code Translation, C to Rust, Dynamic Analysis, SWE" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>
-    
+
   </title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -53,34 +53,46 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <div class="logo-title-container" style="display: flex; align-items: center; justify-content: center;">
-              <img src="./images/re.svg" alt="Logo" class="desktop-logo">
               <h1 class="title is-1 publication-title">
-                <span class="dnerf">Taijitu</span>: XXX
+                <span class="dnerf">Taijitu</span>
               </h1>
             </div>
-            <div class="is-size-5 publication-authors">
-              
+            <div>
+              <h2 class="subtitle is-4 publication-subtitle">
+                Dual Code-Test C to Rust Translation using LLMs and Dynamic Analysis
             </div>
-
-
-            <!-- <div class="is-size-4 publication-authors">
-              <span class="author-block"></span>
-            </div>
+            <br />
 
             <div class="is-size-5 publication-authors">
-
               <span class="author-block">
-                <sup>*</sup>Equal Contribution
-              </span>
+                <a href="https://manishs.org">Manish Shetty</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://naman-ntc.github.io/">Naman Jain</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://adwait.github.io/">Adwait Godbole</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://people.eecs.berkeley.edu/~sseshia/">Sanjit A. Seshia</a><sup>†</sup>,</span>
+              <span class="author-block">
+                <a href="https://people.eecs.berkeley.edu/~ksen/">Koushik Sen</a><sup>†</sup></span>
             </div>
-            <br /> -->
+
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">UC Berkeley</span>
+            </div>
+
+            <div class="is-size-6">
+              <span><sup>*</sup>Equal Contribution,</span>
+              <span><sup>†</sup>Equal Advising</span>
+            </div>
+            <br />
 
 
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="/asset/paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <a href="/asset/paper.pdf" class="external-link button is-normal is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -89,17 +101,16 @@
                 </span>
                 <!-- ArXiv Link. -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/#.#" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://arxiv.org/abs/#.#" class="external-link button is-normal is-dark">
                     <span class="icon">
-                        <i class="ai ai-arxiv"></i>
+                      <i class="ai ai-arxiv"></i>
                     </span>
                     <span>arXiv</span>
                   </a>
                 </span>
                 <!-- GitHub Link. -->
                 <span class="link-block">
-                  <a href="https://github.com/taijitu-project/taijitu"
-                    class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://github.com/taijitu-project/taijitu" class="external-link button is-normal is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
                     </span>
@@ -110,6 +121,37 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="columns is-centered">
+          <img src="./assets/figure1a.png" alt="Teaser" class="teaser-image center" width="85%" />
+        </div>
+
+        <h4 class="hero-body has-text-justified" style="font-size:1.1em">
+          Despite extensive usage in high-performance, low-level systems programming applications,
+          <span class="dnerf">C</span> is susceptible to vulnerabilities due to manual memory management and unsafe
+          pointer operations.
+          <span class="dnerf">Rust</span>, a modern systems programming language, offers a compelling alternative.
+          Through its unique ownership model and type system, it ensures memory safety without sacrificing performance.
+          In this paper, we present <span class="dnerf"><b>Taijitu</b></span>, an automated approach to translate
+          <span class="dnerf">C</span> to <i>safe</i> <span class="dnerf">Rust</span>.
+          Our technique uses a synergistic combination of LLM-driven code and test generation guided by
+          dynamic-analysis-generated execution information.
+          Our approach exposes novel insights on combining the strengths of LLMs and dynamic analysis in the context of
+          scaling and combining code generation with testing.
+          We apply our approach to successfully translate <span class="dnerf">Zopfli</span>, a high-performance
+          compression library with ~3000 lines-of-code and 98 functions.
+          We validate the translation by testing equivalence with the source C program on a set of inputs. To our
+          knowledge, this is the largest automated and test-validated C to <i>safe</i>
+          Rust code translation achieved so far.
+        </h4>
+
       </div>
     </div>
   </section>
