@@ -1,1 +1,1 @@
-# taijitu-project.github.io
+# syzygy-project.github.io
