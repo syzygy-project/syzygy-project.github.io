@@ -165,7 +165,7 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Translating google/zopfli from C to Rust</h2>
           <div class="content has-text-justified">
-            We completely translate <span class="dnerf">Zopfli</span>, a compression algorithm known
+            We <i>completely</i> translate <span class="dnerf">Zopfli</span>, a compression algorithm known
             to achieve superior compression ratios by extensively optimizing the compression process.
             The codebase consists of over 3000 lines of C code (excluding comments),
             comprising 98 functions and 10 structs, and spans over 21 files.
@@ -189,7 +189,7 @@
             However, the distribution shows a long tail of <i>challenging</i> functions with lower pass rates (below
             20%).
 
-            <h3 class="title is-4">Correctness & Efficiency</h3>
+            <h3 class="title is-4">Efficiency</h3>
             We further evaluated the final translated Rust code on
             varied test inputs and compared the output and execution time with the original C code.
             We construct two test suites -- first with six strings formed by repeating 'a'
