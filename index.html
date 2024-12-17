@@ -130,21 +130,18 @@
     <div class="container is-max-desktop">
       <div class="hero-body">
         <div class="columns is-centered">
-          <img src="./assets/figure1a.png" alt="Teaser" class="teaser-image center" width="85%" />
+          <img src="./assets/overview.png" alt="Teaser" class="teaser-image center" width="80%" />
         </div>
-
-        <h4 class="hero-body has-text-justified" style="font-size:1.1em">
+        <h4 class="hero-body has-text-justified">
           Despite extensive usage in high-performance, low-level systems programming applications,
           <span class="dnerf">C</span> is susceptible to vulnerabilities due to manual memory management and unsafe
           pointer operations.
           <span class="dnerf">Rust</span>, a modern systems programming language, offers a compelling alternative.
           Through its unique ownership model and type system, it ensures memory safety without sacrificing performance.
-          In this paper, we present <span class="dnerf"><b>Syzygy</b></span>, an automated approach to translate
+          We present <span class="dnerf"><b>Syzygy</b></span>, an automated approach to translate
           <span class="dnerf">C</span> to <i>safe</i> <span class="dnerf">Rust</span>.
           Our technique uses a synergistic combination of LLM-driven code and test generation guided by
           dynamic-analysis-generated execution information.
-          Our approach exposes novel insights on combining the strengths of LLMs and dynamic analysis in the context of
-          scaling and combining code generation with testing.
           We apply our approach to successfully translate <span class="dnerf">Zopfli</span>, a high-performance
           compression library with ~3000 lines-of-code and 98 functions.
           We validate the translation by testing equivalence with the source C program on a set of inputs. To our
@@ -157,6 +154,110 @@
   </section>
 
 
+  <section class="section" style="padding-top: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Dualities for <i>Safe</i> and <i>Valid</i> C to Rust</h2>
+          <div class="content has-text-justified">
+            As the name suggests, <span class="dnerf">Syzygy</span> exhibits two kinds of dualities that form the core
+            principles of our approach.
+            <ul>
+              <li>
+                <b>LLMs meet Dynamic Analysis.</b> First, we synergistically combine
+                the superior generative capabilities of LLMs with semantic execution information collected by dynamic
+                analyses on the source C codebase.
+              </li>
+              <li>
+                <b>Dual Code-Test Translation.</b> Secondly, as opposed to using the LLM+Dynamic Analysis recipe
+                to perform Rust code-generation <i>alone</i>, we also build a test translation approach
+                for reliable equivalence testing.
+              </li>
+            </ul>
+          </div>
+          <br />
+          <section class="video-teaser">
+            <div class="container is-max-desktop">
+              <div class="columns is-centered">
+                <div class="column is-three-fourths">
+                  <div class="video-container">
+                    <!-- add overview.gif -->
+                    <img src="./assets/overview.gif" alt="Syzygy Overview" class="teaser-image center" width="100%"
+                      height="90%" />
+                  </div>
+                  <h2 class="content has-text-justified">
+                    <b>Overview.</b> The <span class="dnerf">Slicer</span> decomposes
+                    a codebase into translation units, <span class="dnerf">CodeGenerator</span>
+                    performs translation for that unit, and <span class="dnerf">EqTester</span> checks for
+                    equivalence of the generated Rust code with the original C code.
+                    <span class="dnerf">ArgTranslator</span> maps the C-Rust function arguments allowing
+                    appropriate equivalence checks in <span class="dnerf">EqTester</span>.
+                    <span class="dnerf">SpecMiner</span>, our dynamic analysis module, mines (property and
+                    I/O) specifications for internal C functions using top-level tests.
+                    These specifications later assist our LLM-driven dual code-test translation.
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Scaling LLM Inference with Dynamic Analysis</h2>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <img src="./assets/pipeline.png" alt="Pipeline" class="teaser-image" width="70%" />
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <p><b>Translation Pipeline.</b> As shown above, given a C function and test suite, we run four modules:
+            </p>
+
+            <ol style="list-style-type: upper-alpha;">
+              <li> <span class="dnerf">SpecMiner:</span> Analyzes function execution,
+                collecting I/O and key properties like types, aliasing, and bounds.</li>
+              <li> <span class="dnerf">CodeGenerator:</span> An LLM uses the spec to craft a
+                candidate Rust translation.</li>
+              <li> <span class="dnerf">ArgTranslator:</span> An LLM creates a function that translates C I/O to Rust
+                inputs and expected outputs, aligned
+                with the generated Rust translation.</li>
+              <li> <span class="dnerf">EqTester:</span> An LLM generates a
+                test that executes the candidate translation, along with the previously generated Rust code (Invariant),
+                and checks whether the outputs match expected values.</li>
+            </ol>
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths has-text-justified">
+          <p><b>Rejection Sampling.</b> As shown below, we use rejection sampling to scale LLM inference throughout the
+            pipeline. To do so, we alternate between generation (→) and verification (-->) steps,
+            beginning with an LLM generating N candidate Rust functions which are filtered for compilation.
+            The pipeline then samples K translate_args functions for each valid candidate,
+            with subsequent execution filtering and equivalence testing phases that create and verify triples,
+            ultimately yielding successfully translated and equivalent Rust functions.
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <img src="./assets/irs.png" alt="Pipeline" class="teaser-image" width="75%" />
+        </div>
+      </div>
+
+    </div>
+  </section>
 
 
   <section class="section">
