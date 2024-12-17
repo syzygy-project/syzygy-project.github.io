@@ -156,6 +156,102 @@
     </div>
   </section>
 
+
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Translating google/zopfli from C to Rust</h2>
+          <div class="content has-text-justified">
+            We completely translate <span class="dnerf">Zopfli</span>, a compression algorithm known
+            to achieve superior compression ratios by extensively optimizing the compression process.
+            The codebase consists of over 3000 lines of C code (excluding comments),
+            comprising 98 functions and 10 structs, and spans over 21 files.
+            It provides a challenging testbed for evaluating our approach due to the diversity of
+            the source code constructs, including heap-based data structures
+            (such as linked lists and array iterators), function pointers, and void* arguments.
+            Our translated Zopfli program ranges over 7000 lines (including verbose comments and
+            docstrings).
+
+            <h3 class="title is-4">Pass Rate</h3>
+            We study the quality of the translation candidates across functions with two metrics: compilation pass rate
+            and execution pass rate. Compilation pass rate is computed as the number of translations that compile
+            against the total number of translations generated. The execution pass rate is computed as the number of
+            translations that pass the equivalence test compared to the total number of compiling translations.
+            <div class="columns is-centered" style="padding-top:2em;">
+              <img src="./assets/pass_rate.png" alt="Pass@1 on R2E-Eval1" class="teaser-image center" width="60%"
+                height="60%" />
+            </div>
+
+            The mean pass rates are high, ranging over 75% for both compilable and executable translations.
+            However, the distribution shows a long tail of <i>challenging</i> functions with lower pass rates (below
+            20%).
+
+            <h3 class="title is-4">Correctness & Efficiency</h3>
+            We further evaluated the final translated Rust code on
+            varied test inputs and compared the output and execution time with the original C code.
+            We construct two test suites -- first with six strings formed by repeating 'a'
+            different number of times (between 10 and 1000000 times) and second with
+            twelve random strings of varying lengths (between 1000 and 1000000 characters).
+            Additionally, we compare the execution times under default compilation configuration
+            (<code>gcc -O0 -g</code> and <code>cargo debug</code>) and optimized compilation configuration
+            (<code>gcc -O3</code> and <code>cargo build --release</code>) for both the C and Rust implementations.
+
+            <div style="padding-top:2em;">
+              <table>
+                <caption>Performance Comparison of C and Rust Implementations</caption>
+                <thead>
+                  <tr>
+                    <th rowspan="2">Input Type</th>
+                    <th colspan="3">Default</th>
+                    <th colspan="3">Optimized</th>
+                  </tr>
+                  <tr>
+                    <th>C</th>
+                    <th>Rust</th>
+                    <th>Slowdown</th>
+                    <th>C</th>
+                    <th>Rust</th>
+                    <th>Slowdown</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Repeated Input</td>
+                    <td>0.17</td>
+                    <td>1.56</td>
+                    <td>8.9x</td>
+                    <td>0.040</td>
+                    <td>0.059</td>
+                    <td>1.47x</td>
+                  </tr>
+                  <tr>
+                    <td>Random Input</td>
+                    <td>0.242</td>
+                    <td>3.336</td>
+                    <td>13.8x</td>
+                    <td>0.094</td>
+                    <td>0.330</td>
+                    <td>3.67x</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br />
+
+            We find that the translated Rust code is equivalent but slower, with larger slowdowns,
+            in the default compilation compared to the optimized compilation configuration.
+            Even with the compiler optimization, the Rust code is up to 3.67X slower than the C code.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
 </body>
 
 </html>
